@@ -17,18 +17,43 @@ def bubble_sort(arr):
     return arr
 
 
-def quick_sort(arr):
+def quick_sort(arr, pivot_strategy='middle'):
     """
-    Perform quick sort on a list.
+    Perform quick sort on a list with customizable pivot selection strategy.
 
     :param arr: List of elements to be sorted.
+    :param pivot_strategy: Strategy for selecting pivot element.
+                          Options: 'first', 'last', 'middle', 'random', 'median_of_three'.
     :return: Sorted list.
     """
+    import random
+    
     if len(arr) <= 1:
         return arr
     
     # 选择基准元素
-    pivot = arr[len(arr) // 2]
+    if pivot_strategy == 'first':
+        pivot = arr[0]
+    elif pivot_strategy == 'last':
+        pivot = arr[-1]
+    elif pivot_strategy == 'middle':
+        pivot = arr[len(arr) // 2]
+    elif pivot_strategy == 'random':
+        pivot = arr[random.randint(0, len(arr) - 1)]
+    elif pivot_strategy == 'median_of_three':
+        first = arr[0]
+        middle = arr[len(arr) // 2]
+        last = arr[-1]
+        # 找出三个元素的中位数
+        if first <= middle <= last or last <= middle <= first:
+            pivot = middle
+        elif middle <= first <= last or last <= first <= middle:
+            pivot = first
+        else:
+            pivot = last
+    else:
+        # 默认使用中间元素作为pivot
+        pivot = arr[len(arr) // 2]
     
     # 分割数组
     left = [x for x in arr if x < pivot]
@@ -36,4 +61,4 @@ def quick_sort(arr):
     right = [x for x in arr if x > pivot]
     
     # 递归排序并合并结果
-    return quick_sort(left) + middle + quick_sort(right)
+    return quick_sort(left, pivot_strategy) + middle + quick_sort(right, pivot_strategy)
