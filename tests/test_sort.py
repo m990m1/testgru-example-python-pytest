@@ -60,3 +60,27 @@ def test_quick_sort_floats():
 
 def test_quick_sort_strings():
     assert quick_sort(['banana', 'apple', 'cherry', 'date']) == ['apple', 'banana', 'cherry', 'date']
+
+def test_quick_sort_first_pivot():
+    assert quick_sort([3, 1, 4, 1, 5], pivot_strategy='first') == [1, 1, 3, 4, 5]
+
+def test_quick_sort_last_pivot():
+    assert quick_sort([3, 1, 4, 1, 5], pivot_strategy='last') == [1, 1, 3, 4, 5]
+
+def test_quick_sort_random_pivot():
+    assert quick_sort([3, 1, 4, 1, 5], pivot_strategy='random') == [1, 1, 3, 4, 5]
+
+def test_quick_sort_median_of_three_pivot():
+    assert quick_sort([3, 1, 4, 1, 5], pivot_strategy='median_of_three') == [1, 1, 3, 4, 5]
+
+def test_quick_sort_invalid_pivot():
+    assert quick_sort([3, 1, 4, 1, 5], pivot_strategy='invalid') == [1, 1, 3, 4, 5]
+
+def test_quick_sort_large_numbers():
+    assert quick_sort([1000000, 999999, 1000001]) == [999999, 1000000, 1000001]
+
+def test_quick_sort_extreme_values():
+    import sys
+    max_int = sys.maxsize
+    min_int = -sys.maxsize - 1
+    assert quick_sort([max_int, 0, min_int]) == [min_int, 0, max_int]
